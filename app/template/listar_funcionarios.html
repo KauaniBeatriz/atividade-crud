@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Funcionários</title>
+    
+    <!-- Incluir o Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Lista de Funcionários</h2>
+
+        <!-- Tabela com Bootstrap -->
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nome</th>
+                    <th>Data de Nascimento</th>
+                    <th>Email</th>
+                    <th>Profissão</th>
+                    <th>CPF</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for funcionario in funcionarios %}
+                    <tr>
+                        <td>{{ funcionario.nome }}</td>
+                        <td>{{ funcionario.data_nascimento }}</td>
+                        <td>{{ funcionario.email }}</td>
+                        <td>{{ funcionario.profissao }}</td>
+                        <td>{{ funcionario.cpf }}</td>
+                        <td>
+                            <!-- Botão de Editar -->
+                            <a href="{% url 'form_funcionario' funcionario.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                            
+                            <!-- Botão de Excluir -->
+                            <form action="{% url 'form_funcionario' funcionario.pk %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" name="deletar" class="btn btn-danger btn-sm">Excluir</button>
+                            </form>
+
+                            <!-- Botão de Exibir Dados -->
+                            <a href="{% url 'exibir_funcionario' funcionario.pk %}" class="btn btn-info btn-sm">Exibir Dados</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'form_funcionario' %}" class="btn btn-success">Cadastrar Novo Funcionário</a>
+    </div>
+
+    <!-- Incluir o script do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

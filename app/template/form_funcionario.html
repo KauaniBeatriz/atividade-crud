@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if action == 'criar' %}Cadastro de Funcionário{% else %}Editar Funcionário{% endif %}</title>
+
+    <!-- Incluir o Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>{% if action == 'criar' %}Cadastro de Funcionário{% else %}Editar Funcionário{% endif %}</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                {{ form.nome }}
+            </div>
+            <div class="form-group">
+                <label for="data_nascimento">Data de Nascimento</label>
+                {{ form.data_nascimento }}
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label for="profissao">Profissão</label>
+                {{ form.profissao }}
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                {{ form.cpf }}
+            </div>
+
+            {% if action == 'editar' %}
+                <button type="submit" class="btn btn-warning">Salvar Alterações</button>
+                <form method="post" action="{% url 'form_funcionario' funcionario.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" name="deletar" class="btn btn-danger">Excluir Funcionário</button>
+                </form>
+            {% else %}
+                <button type="submit" class="btn btn-success">Cadastrar Funcionário</button>
+            {% endif %}
+        </form>
+
+        <br><br>
+        <a href="{% url 'listar_funcionarios' %}" class="btn btn-secondary">Voltar para a lista de funcionários</a>
+    </div>
+
+    <!-- Incluir o script do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
